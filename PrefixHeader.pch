@@ -1,0 +1,84 @@
+//
+//  PrefixHeader.pch
+//  BingoWaterfallFlowDemo
+//
+//  Created by giikylee on 16/5/4.
+//  Copyright © 2016年 Bing. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+#define  wKscreen CGRectGetWidth([UIScreen mainScreen].bounds)
+#define  hKscreen CGRectGetHeight([UIScreen mainScreen].bounds)
+#define ALLUrl  @"http://192.168.2.13:8080/shop/"
+#define GColor  [UIColor colorWithRed:77/255.0 green:179/255.0 blue:108/255.0 alpha:1]
+//
+/**/
+#define XNWindowWidth ([[UIScreen mainScreen] bounds].size.width)
+
+#define XNWindowHeight ([[UIScreen mainScreen] bounds].size.height)
+
+#define XNColor(r, g, b, a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
+
+#define XNFont(font) [UIFont systemFontOfSize:(font)]
+
+
+#define WEAK  @weakify(self);
+#define STRONG  @strongify(self);
+//
+//购物车
+#define SCREEN_WIDTH_SCALE SCREEN_WIDTH / 375.0
+#define SCREEN_HEIGHT_SCALE SCREEN_HEIGHT / 667.0
+
+#define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define IS_RETINA ([[UIScreen mainScreen] scale] >= 2.0)
+
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
+
+#define IS_IPHONE_4_OR_LESS (IS_IPHONE && SCREEN_MAX_LENGTH < 568.0)
+#define IS_IPHONE_5 (IS_IPHONE && SCREEN_MAX_LENGTH == 568.0)
+#define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
+#define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
+
+#define UIColorRGBA(r, g, b, a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
+
+
+#define BACKGROUNDCOLOR [UIColor colorWithRed:239.0/255.0 green:34.0/255.0 blue:109.0/255.0 alpha:1.0]
+#define TextColor [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0]
+
+/**
+ *  线条描边
+ *
+ *  @param _ref <#_ref description#>
+ *
+ *  @return <#return value description#>
+ */
+#define GrayLine [UIColor colorWithRed:221.0/255.0 green:221.0/255.0 blue:221.0/255.0 alpha:1.0]
+
+#define DarkGrayLine [UIColor colorWithRed:140.0/255.0 green:140.0/255.0 blue:140.0/255.0 alpha:1.0]
+#define ThemeColor [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]
+
+#define NotNilAndNull(_ref) (((_ref) != nil) && (![(_ref)isEqual:[NSNull null]]))
+#define IsNilOrNull(_ref) (((_ref) == nil) || ([_ref] isEqual:[NSNull null]))
+//
+
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#ifdef DEBUG
+#define debugLog(...)    NSLog(__VA_ARGS__)
+#define debugMethod()    NSLog(@"%s", __func__)
+#define debugError()     NSLog(@"Error at %s Line:%d", __func__, __LINE__)
+#else
+#define debugLog(...)
+#define debugMethod()
+#define debugError()
+#endif
+
+
+#endif /* PrefixHeader_pch */

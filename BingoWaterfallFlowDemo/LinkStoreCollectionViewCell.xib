@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="gTV-IL-0wX" customClass="LinkStoreCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="106" height="130"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="106" height="130"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EPJ-0D-BKC">
+                        <rect key="frame" x="8" y="8" width="90" height="96"/>
+                        <color key="backgroundColor" red="0.80000001190000003" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="衣服" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ppc-3M-Itb">
+                        <rect key="frame" x="8" y="105" width="90" height="23"/>
+                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="23" id="1NS-i8-Vxk"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9tt-hr-xqT">
+                        <rect key="frame" x="0.0" y="0.0" width="106" height="130"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstItem="ppc-3M-Itb" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="4CC-kU-wkP"/>
+                <constraint firstAttribute="bottom" secondItem="ppc-3M-Itb" secondAttribute="bottom" constant="2" id="AcR-zL-peK"/>
+                <constraint firstItem="ppc-3M-Itb" firstAttribute="trailing" secondItem="EPJ-0D-BKC" secondAttribute="trailing" id="FXi-IZ-tAp"/>
+                <constraint firstAttribute="trailing" secondItem="EPJ-0D-BKC" secondAttribute="trailing" constant="8" id="Jdh-Mt-nKh"/>
+                <constraint firstItem="ppc-3M-Itb" firstAttribute="leading" secondItem="EPJ-0D-BKC" secondAttribute="leading" id="LDc-kq-Qow"/>
+                <constraint firstAttribute="trailing" secondItem="ppc-3M-Itb" secondAttribute="trailing" constant="8" id="Pw7-sX-eHZ"/>
+                <constraint firstItem="9tt-hr-xqT" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="W4G-xW-JIq"/>
+                <constraint firstAttribute="bottom" secondItem="ppc-3M-Itb" secondAttribute="bottom" constant="2" id="b2D-ZD-SYw"/>
+                <constraint firstItem="EPJ-0D-BKC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="fZz-tr-4Zt"/>
+                <constraint firstAttribute="trailing" secondItem="9tt-hr-xqT" secondAttribute="trailing" id="ig6-Zc-5zo"/>
+                <constraint firstAttribute="bottom" secondItem="9tt-hr-xqT" secondAttribute="bottom" id="nyM-Le-Ui7"/>
+                <constraint firstItem="9tt-hr-xqT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="pkm-OY-3Fe"/>
+                <constraint firstItem="ppc-3M-Itb" firstAttribute="top" secondItem="EPJ-0D-BKC" secondAttribute="bottom" constant="1" id="vM2-4m-HbI"/>
+                <constraint firstItem="EPJ-0D-BKC" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="xgE-wX-24O"/>
+                <constraint firstItem="ppc-3M-Itb" firstAttribute="top" secondItem="EPJ-0D-BKC" secondAttribute="bottom" constant="1" id="yAa-vN-8MD"/>
+            </constraints>
+            <size key="customSize" width="106" height="130"/>
+            <connections>
+                <outlet property="backLabel" destination="9tt-hr-xqT" id="koa-SB-KIy"/>
+            </connections>
+            <point key="canvasLocation" x="796" y="453"/>
+        </collectionViewCell>
+    </objects>
+</document>
