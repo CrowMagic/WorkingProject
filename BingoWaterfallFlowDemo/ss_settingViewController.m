@@ -27,6 +27,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationController.title = @"设置";
     // Do any additional setup after loading the view.
     [self.view addSubview:self.myTableView];
     NSArray *array = @[@"",@"用户名",@"昵称",@"性别",@"出生日期",@"个性签名",@"修改密码"];

@@ -11,5 +11,6 @@
 @interface MyGoldViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 @property (weak, nonatomic) IBOutlet UILabel *numberOfGoldLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfJiFen;
 
 @end

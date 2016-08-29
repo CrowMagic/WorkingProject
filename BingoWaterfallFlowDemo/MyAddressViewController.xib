@@ -15,9 +15,9 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rgg-PC-qkj">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rgg-PC-qkj">
                     <rect key="frame" x="0.0" y="501" width="600" height="50"/>
-                    <color key="backgroundColor" red="0.39607831655262427" green="1" blue="0.11458250742696985" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.10980392160000001" green="0.64313725489999995" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="iP3-KV-QDG"/>
                     </constraints>

@@ -22,8 +22,8 @@
 /**
  *  修改收货地址
  *
- *  @param viewController <#viewController description#>
- *  @param model          <#model description#>
+ *  @param viewController
+ *  @param model                
  *  @param index          区别不同的行号
  */
 - (void)modifyViewController:(UIViewController *)viewController
@@ -40,9 +40,8 @@
 @property (nonatomic, weak) id <BuildNewAddressViewControllerDelegate> delegate;
 
 @property (nonatomic, assign) NSInteger receiveAddNewButtonTag;
-@property (nonatomic, assign) NSInteger receiveModifyButtonTag;
-
-@property (nonatomic, assign) NSInteger passInsertDBIndex;
+@property (nonatomic, assign) NSInteger receiveModifyButtonTag;//记录修改的的某一行
+//@property (nonatomic, assign) NSInteger aCount;
 
 
 @property (weak, nonatomic) IBOutlet UIView *aView;

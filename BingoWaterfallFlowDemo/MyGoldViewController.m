@@ -7,8 +7,14 @@
 //
 
 #import "MyGoldViewController.h"
+#import "ChongZhiViewController.h"
+@interface MyGoldViewController ()<ChongZhiViewControllerDelegate>
+@property (weak, nonatomic) IBOutlet UIView *lingQuView;
+@property (weak, nonatomic) IBOutlet UIView *jinBiView;
+@property (weak, nonatomic) IBOutlet UIView *jiFenVIew;
+@property (weak, nonatomic) IBOutlet UIView *xiaoFeiView;
 
-@interface MyGoldViewController ()
+@property (nonatomic, strong) ChongZhiViewController *chongZhiVC;
 
 @end
 
@@ -16,30 +22,78 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    
+    UIColor *leftColor = [UIColor colorWithRed:110/255.0 green:205/255.0 blue:251/255.0 alpha:1];
+    UIColor *rightColor = [UIColor colorWithRed:255/255.0 green:200/255.0 blue:98/255.0 alpha:1];
+    self.lingQuView.layer.borderWidth = 1;
+    self.lingQuView.layer.borderColor = leftColor.CGColor;
+    self.jiFenVIew.layer.borderWidth = 1;
+    self.jiFenVIew.layer.borderColor = leftColor.CGColor;
+    self.jinBiView.layer.borderWidth = 1;
+    self.jinBiView.layer.borderColor = rightColor.CGColor;
+    self.xiaoFeiView.layer.borderWidth = 1;
+    self.xiaoFeiView.layer.borderColor = rightColor.CGColor;
+    
+    
+    
     self.headImageView.image = [UIImage imageNamed:@"artMaster.jpg"];
     self.headImageView.layer.cornerRadius = 50;
     self.headImageView.clipsToBounds = YES;
     self.headImageView.layer.masksToBounds = YES;
+ 
+    self.numberOfGoldLabel.attributedText = [self originalString:@"金币" insertString:@"200"];
+    self.numberOfJiFen.attributedText = [self originalString:@"积分" insertString:@"4000"];
     
     
-//    UILabel *aLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 300, 100)];
-    NSString *originalString = @"已有金币";
-    NSString *insertString = @"200";
-    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:insertString];
+    self.chongZhiVC = [[ChongZhiViewController alloc] init];
+    self.chongZhiVC.delegate = self;
     
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:originalString];
-    [str insertAttributedString:attString atIndex:2];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(2, insertString.length)];
-    self.numberOfGoldLabel.attributedText = str;
-//    [self.view addSubview:aLabel];
-
+    
     
 }
+
+
+- (void)ensureButtonClickAndChangeCoutJinBi:(NSString *)countStringJinBi {
+    debugLog(@"金币代理调用了");
+
+    self.numberOfGoldLabel.attributedText = [self originalString:@"金币" insertString:countStringJinBi];
+
+}
+
+- (void)ensureButtonClickAndChangeCoutJiFen:(NSString *)countStringJiFen {
+    debugLog(@"积分代理调用了");
+
+    self.numberOfJiFen.attributedText = [self originalString:@"积分" insertString:countStringJiFen];
+}
+
+
+
+- (NSAttributedString *)originalString:(NSString *)original insertString:(NSString *)insert {
+    NSAttributedString *strInsert = [[NSAttributedString alloc] initWithString:insert];
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:original];
+    [str insertAttributedString:strInsert atIndex:0];
+    
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, insert.length)];
+    return str;
+}
+
+
+
+- (IBAction)chongZhiButton:(UIButton *)sender {
+
+    [self presentViewController:self.chongZhiVC animated:YES completion:nil];
+    
+    
+}
+
+
 
 /**
  *  领取金币
  *
- *  @param sender <#sender description#>
+ *  @param sender
  */
 - (IBAction)getGoldButton:(UIButton *)sender {
     
@@ -48,7 +102,7 @@
 /**
  *  金币提现
  *
- *  @param sender <#sender description#>
+ *  @param sender
  */
 - (IBAction)goldCashButton:(UIButton *)sender {
     

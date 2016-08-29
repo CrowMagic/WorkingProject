@@ -16,27 +16,27 @@
 /**
  *  插入收货地址
  *
- *  @param address <#address description#>
+ *  @param address
  */
 + (void)ss_insertAddress:(AddressModel *)address;
 /**
  *  查询收货地址
  *
- *  @return <#return value description#>
+ *  @return
  */
 + (NSArray *)ss_selectAllAddress;
 /**
  *  删除收货地址
  *
- *  @param addressName <#addressName description#>
+ *  @param addressName
  */
 + (void)ss_deleteAllAddress:(AddressModel *)address;
 
 /**
  *  修改收货地址
  *
- *  @param model <#model description#>
- *  @param index <#index description#>
+ *  @param model
+ *  @param index    
  */
 + (void)ss_updateAddress:(AddressModel *)model
                    index:(NSInteger)index;

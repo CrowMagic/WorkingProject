@@ -22,7 +22,7 @@
                             <constraint firstAttribute="height" constant="40" id="yyb-pm-v26"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="151****1234" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TVJ-5Z-1ks">
@@ -32,7 +32,7 @@
                             <constraint firstAttribute="width" constant="150" id="xtr-L3-cYz"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="广东深圳市宝安区沙井街道" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HfH-H0-cB0">
@@ -41,64 +41,78 @@
                             <constraint firstAttribute="height" constant="26" id="Ziq-1L-MlD"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JHu-AW-ePH">
-                        <rect key="frame" x="0.0" y="99" width="362" height="2"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <rect key="frame" x="0.0" y="99" width="362" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="2" id="o0k-BN-TK5"/>
+                            <constraint firstAttribute="height" constant="1" id="o0k-BN-TK5"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="默认地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mvh-dq-HGR">
-                        <rect key="frame" x="20" y="118" width="68" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3si-Q1-rwU">
-                        <rect key="frame" x="294" y="111" width="50" height="30"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3si-Q1-rwU">
+                        <rect key="frame" x="272" y="114" width="80" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="tDX-uC-LET"/>
+                            <constraint firstAttribute="height" constant="30" id="51e-Vw-bum"/>
+                            <constraint firstAttribute="width" constant="80" id="AgX-6b-T5L"/>
                         </constraints>
-                        <state key="normal" title="删除"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <state key="normal" title="删除">
+                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDL-AU-NYW">
-                        <rect key="frame" x="234" y="109" width="50" height="35"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Wt-TS-w9a">
+                        <rect key="frame" x="5" y="114" width="100" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="wjI-gS-uCp"/>
+                            <constraint firstAttribute="height" constant="30" id="Led-Gr-yee"/>
+                            <constraint firstAttribute="width" constant="100" id="aVh-VH-sAj"/>
                         </constraints>
-                        <state key="normal" title="编辑"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <state key="normal" title="默认地址">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDL-AU-NYW">
+                        <rect key="frame" x="192" y="114" width="80" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="F23-GE-MVV"/>
+                            <constraint firstAttribute="width" constant="80" id="fcy-9k-upt"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <state key="normal" title="编辑">
+                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="3si-Q1-rwU" secondAttribute="trailing" constant="10" id="2TO-B8-doH"/>
-                    <constraint firstItem="CDL-AU-NYW" firstAttribute="top" secondItem="JHu-AW-ePH" secondAttribute="bottom" constant="8" id="4J2-Px-3m5"/>
-                    <constraint firstItem="3si-Q1-rwU" firstAttribute="top" secondItem="JHu-AW-ePH" secondAttribute="bottom" constant="10" id="D8v-We-Ccl"/>
+                    <constraint firstAttribute="bottom" secondItem="3Wt-TS-w9a" secondAttribute="bottom" constant="10" id="Cax-za-if5"/>
                     <constraint firstItem="TVJ-5Z-1ks" firstAttribute="leading" secondItem="W0w-qa-Uof" secondAttribute="trailing" constant="80" id="Dt8-Nr-WAY"/>
-                    <constraint firstItem="3si-Q1-rwU" firstAttribute="leading" secondItem="CDL-AU-NYW" secondAttribute="trailing" constant="10" id="GCL-c3-JDx"/>
                     <constraint firstItem="HfH-H0-cB0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="IBl-OS-cn1"/>
                     <constraint firstItem="JHu-AW-ePH" firstAttribute="top" secondItem="HfH-H0-cB0" secondAttribute="bottom" constant="10" id="LP2-Th-UXz"/>
+                    <constraint firstAttribute="bottom" secondItem="3si-Q1-rwU" secondAttribute="bottom" constant="10" id="N8C-zg-Fp8"/>
                     <constraint firstItem="JHu-AW-ePH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="R6p-CN-TcG"/>
                     <constraint firstItem="TVJ-5Z-1ks" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="UVt-5B-OSm"/>
+                    <constraint firstItem="3si-Q1-rwU" firstAttribute="leading" secondItem="CDL-AU-NYW" secondAttribute="trailing" id="aaR-fj-WL5"/>
                     <constraint firstAttribute="trailing" secondItem="JHu-AW-ePH" secondAttribute="trailing" id="lgX-Hh-nGe"/>
+                    <constraint firstAttribute="trailing" secondItem="3si-Q1-rwU" secondAttribute="trailing" constant="10" id="nfK-IS-Hu8"/>
                     <constraint firstItem="W0w-qa-Uof" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="oaY-ZK-D97"/>
-                    <constraint firstAttribute="bottom" secondItem="CDL-AU-NYW" secondAttribute="bottom" constant="10" id="s4H-UK-UT6"/>
+                    <constraint firstItem="3Wt-TS-w9a" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="q17-Nh-O4v"/>
                     <constraint firstItem="HfH-H0-cB0" firstAttribute="top" secondItem="W0w-qa-Uof" secondAttribute="bottom" constant="15" id="soL-Ws-nef"/>
                     <constraint firstAttribute="trailingMargin" secondItem="HfH-H0-cB0" secondAttribute="trailing" constant="10" id="u6e-8P-8xy"/>
                     <constraint firstItem="W0w-qa-Uof" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="w9d-6c-Grp"/>
+                    <constraint firstAttribute="bottom" secondItem="CDL-AU-NYW" secondAttribute="bottom" constant="10" id="wKU-IU-GfQ"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="1" green="0.309804511" blue="0.77427183239999997" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="addressLabel" destination="HfH-H0-cB0" id="2cl-MD-ON8"/>
+                <outlet property="addressMoRenButton" destination="3Wt-TS-w9a" id="Veq-4C-1d3"/>
                 <outlet property="deleteButton" destination="3si-Q1-rwU" id="3Za-Ok-s81"/>
                 <outlet property="editButton" destination="CDL-AU-NYW" id="fHD-U4-IoF"/>
                 <outlet property="nameLabel" destination="W0w-qa-Uof" id="dcA-CI-PQ6"/>
                 <outlet property="phoneLabel" destination="TVJ-5Z-1ks" id="G66-98-g6v"/>
             </connections>
-            <point key="canvasLocation" x="219" y="387.5"/>
+            <point key="canvasLocation" x="343" y="397.5"/>
         </tableViewCell>
     </objects>
 </document>
