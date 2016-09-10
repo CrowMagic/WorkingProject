@@ -149,38 +149,42 @@
 - (IBAction)loginButton:(UIButton *)sender {
     debugLog(@"登录");
     
+//    
+//    [self.usernameTF resignFirstResponder];
+//    [self.passwordTF resignFirstResponder];
+//    
+//    ss_loginModel *model = [[ss_loginModel alloc] init];
+//    model.username = self.usernameTF.text;
+//    model.password = self.passwordTF.text;
+//    [self theNetworkIsOK];
+//    if (theNetworkIsOK) {
+//        MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    
+//        HUD.labelText = @"正在登陆...";
+//        HUD.labelFont = [UIFont systemFontOfSize:14];
+//        [ss_loginRequest ss_loginHTTPRequestModel:model request:^(NSDictionary *dic) {
+//            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+//                sleep(1.0);
+//                if ([dic[@"resultMessage"] isEqual:@"登陆成功"]) {
+//                    [[NSUserDefaults standardUserDefaults] setObject:model.username forKey:@"USERNAME"];
+//                    [[NSUserDefaults standardUserDefaults] setObject:model.password forKey:@"PASSWORD"];
+//                    [[NSUserDefaults standardUserDefaults] synchronize];
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        [HUD hide:YES];
+//                        [self.navigationController popViewControllerAnimated:YES];
+//                    });
+//                }
+//                
+//            });
+//
+//        }];
+//
+//    }
     
-    [self.usernameTF resignFirstResponder];
-    [self.passwordTF resignFirstResponder];
     
-    ss_loginModel *model = [[ss_loginModel alloc] init];
-    model.username = self.usernameTF.text;
-    model.password = self.passwordTF.text;
-    [self theNetworkIsOK];
-    if (theNetworkIsOK) {
-        MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-        HUD.labelText = @"正在登陆...";
-        HUD.labelFont = [UIFont systemFontOfSize:14];
-        [ss_loginRequest ss_loginHTTPRequestModel:model request:^(NSDictionary *dic) {
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-                sleep(1.0);
-                if ([dic[@"resultMessage"] isEqual:@"登陆成功"]) {
-                    [[NSUserDefaults standardUserDefaults] setObject:model.username forKey:@"USERNAME"];
-                    [[NSUserDefaults standardUserDefaults] setObject:model.password forKey:@"PASSWORD"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [HUD hide:YES];
-                        [self.navigationController popViewControllerAnimated:YES];
-                    });
-                }
-                
-            });
-
-        }];
-
-    }
-    
+    [ss_loginRequest ss_loginHTTPRequestModel:nil request:^(NSDictionary *dic) {
+        
+    }];
     
  }
 /**

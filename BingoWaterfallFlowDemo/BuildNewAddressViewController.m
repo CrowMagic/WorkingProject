@@ -47,9 +47,9 @@
     self.saveButton.enabled = NO;
     self.saveButton.backgroundColor = [UIColor lightGrayColor];
     
-    debugLog(@"self.receiveModifyButtonTag = %d", self.receiveModifyButtonTag);
+    debugLog(@"self.receiveModifyButtonTag = %ld", (long)self.receiveModifyButtonTag);
     
-    debugLog(@"self.receiveAddNewButtonTag = %d", self.receiveAddNewButtonTag);
+    debugLog(@"self.receiveAddNewButtonTag = %ld", (long)self.receiveAddNewButtonTag);
     
     [AddressDBTool ss_initDB];
     
@@ -384,9 +384,9 @@
             model.selectLocation = self.choseLocationLabel.text;
             model.address = self.addressTF.text;;
              model.postcode = self.postcodeTF.text;
-            debugLog(@"修改过后的数据在数据库表中的行号：%@", model.recordIDNumber);
+            debugLog(@"修改过后的数据在数据库表中的行号：%ld", (long)model.recordIDNumber);
             [self.delegate modifyViewController:self model:model index:self.receiveModifyButtonTag];
-            [AddressDBTool ss_updateAddress:model index:[model.recordIDNumber integerValue]];
+            [AddressDBTool ss_updateAddress:model index:model.recordIDNumber];
           }
     }
     

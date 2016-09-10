@@ -17,6 +17,9 @@
     self.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.contentView.layer.borderWidth = 1;
     
+    self.artPicture.clipsToBounds = YES;
+    
+    
 //    self.contentView.layer.masksToBounds = YES;
     self.dottedLineView.backgroundColor = [UIColor whiteColor];
     [self drawDashLine:self.dottedLineView lineLength:1 lineSpacing:2 lineColor:[UIColor grayColor]];
@@ -43,13 +46,35 @@
     //给需要 点击cell改变的状态的控件设置tag
     //为了能在外面取到  然后通过点击cell给控件改变状态和属性
     //赋值判断:如果在index位置的值为0  就是未被选中  1就是被选中
-    if ([flagArr[index] intValue]){
+    
+    
+    
+//    if (sender.selected == YES) {
+//        [self.recordCellStateArray setObject:@"0" atIndexedSubscript:indexPath.row];
+//        int count = [cell.thumbUpCount.text intValue];
+//        count -= 1;
+//        
+//        cell.thumbUpCount.text = [NSString stringWithFormat:@"%d", count];
+//        cell.thumbUpCount.textColor = [UIColor blackColor];
+//        sender.selected = NO;
+//    }
+    
+    
+    if ([flagArr[index] isEqualToString:@"1"] ){
         debugLog(@"1");
-        self.thumbUpCount.text = @"124";
+//        self.thumbUpCount.text = @"124";
+        int count = [self.thumbUpCount.text intValue];
+        count += 1;
+        self.thumbUpCount.text = [NSString stringWithFormat:@"%d", count];
+        self.thumbUpCount.textColor = [UIColor colorWithRed:251/255.0 green:130/255.0 blue:130/255.0 alpha:1];
         self.isThumbUpButton.selected = YES;
         
     }else {
-        self.thumbUpCount.text = @"123";
+//        self.thumbUpCount.text = @"123";
+        int count = [self.thumbUpCount.text intValue];
+        count -= 1;
+        self.thumbUpCount.text = [NSString stringWithFormat:@"%d", count];
+        self.thumbUpCount.textColor = [UIColor blackColor];
         self.isThumbUpButton.selected = NO;
 
         debugLog(@"0");

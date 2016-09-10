@@ -12,7 +12,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"姓名:%@ =/= 电话:%@ =/= 地址:%@ =/= 邮编:%@ =/= 默认地址？%@ =/= 记录的行号:%@",_name,_phone, _address, _postcode, _currentAddress, _recordIDNumber];
+    return [NSString stringWithFormat:@"姓名:%@ =/= 电话:%@ =/= 地址:%@ =/= 邮编:%@ =/= 默认地址？%@ =/= 记录的行号:%d",_name,_phone, _address, _postcode, _currentAddress, _recordIDNumber];
 }
 
 

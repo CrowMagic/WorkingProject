@@ -15,5 +15,5 @@
 @property (nonatomic, copy) NSString *address;//手动输入的地址
 @property (nonatomic, copy) NSString *postcode;//邮编
 @property (nonatomic, copy) NSString *currentAddress;//是否默认地址(根据字符串yes或mo来判断)
-@property (nonatomic, copy) NSString *recordIDNumber;//记录当前表的行号(并不在表中创建字段)
+@property (nonatomic, assign) int recordIDNumber;//记录当前表的行号(并不在表中创建字段)
 @end

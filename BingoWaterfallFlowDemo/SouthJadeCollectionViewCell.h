@@ -11,5 +11,7 @@
 @interface SouthJadeCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *jadeImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *brandImageView;
+@property (weak, nonatomic) IBOutlet UILabel *jadeNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jadePriceLabel;
 
 @end

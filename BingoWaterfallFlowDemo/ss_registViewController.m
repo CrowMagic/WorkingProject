@@ -11,7 +11,6 @@
 #import "ss_registModel.h"
 
 
-#import "ss_drawCircle.h"
 
 @interface ss_registViewController ()<UITextFieldDelegate>{
     int second;//倒计时总时间
@@ -23,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *myUsernameTF;       //用户名
 @property (weak, nonatomic) IBOutlet UITextField *myPasswordTF;       //密码
 @property (weak, nonatomic) IBOutlet UITextField *myRepeatPasswordTF;
-@property (weak, nonatomic) IBOutlet UITextField *myEmailTF;
+//@property (weak, nonatomic) IBOutlet UITextField *myEmailTF;
 @property (weak, nonatomic) IBOutlet UIImageView *loginBGView;        //背景图片
 @property (weak, nonatomic) IBOutlet UITextField *phoneVerifyNumberTF;//手机验证码
 @property (weak, nonatomic) IBOutlet UIView *myFirstView;
@@ -32,13 +31,20 @@
 @property (weak, nonatomic) IBOutlet UIButton *myRegistButton;
 @property (weak, nonatomic) IBOutlet UIButton *getPhoneVerifyButton;//获取验证码
 @property (weak, nonatomic) IBOutlet UIButton *myDidReadButton;
-@property (nonatomic, strong) ss_drawCircle *drawCircle;
 
+
+@property (weak, nonatomic) IBOutlet UIImageView *verifyImageView; //显示图形验证码的图片
+@property (weak, nonatomic) IBOutlet UITextField *verifyNumber;    //输入图形验证码图片中的字符
 
 
 
 
 @property (nonatomic, assign) BOOL isDrawCircle;
+
+
+@property (nonatomic, strong) UIView *heheheheView;
+@property (nonatomic, strong) CAShapeLayer *bigGrayLayer;
+@property (nonatomic, strong) CAShapeLayer *smallGreenLayer;
 
 
 @end
@@ -47,7 +53,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.getPhoneVerifyButton.backgroundColor = [UIColor colorWithRed:28/255.0 green:164/255.0 blue:70/255.0 alpha:1];
+    self.getPhoneVerifyButton.enabled = YES;
     
     second = 60;
     
@@ -62,33 +69,50 @@
     self.myUsernameTF.delegate = self;
 //    self.myPasswordTF.delegate = self;
 //    self.myRepeatPasswordTF.delegate = self;
-    self.myEmailTF.delegate = self;
+//    self.myEmailTF.delegate = self;
+    self.verifyNumber.delegate = self;
     
     #pragma mark - 画我已详细阅读的小圆圈
-    ss_drawCircle *aView = [[ss_drawCircle alloc] initWithFrame:CGRectMake(0 , 0, 25, 25)];
-    aView.center = self.myDidReadButton.center;
-    aView.backgroundColor = [UIColor whiteColor];
-    aView.userInteractionEnabled = NO;
-    [self.myDidReadButton addSubview:aView];
+    
+    [self setupHaveReadProtocolState];
     
     
-    self.drawCircle = [[ss_drawCircle alloc] init];
-    self.drawCircle.center = self.myDidReadButton.center;
-    self.drawCircle.bounds = CGRectMake(0, 0, 22, 22);
-    self.drawCircle.backgroundColor = [UIColor colorWithRed:28/255.0 green:164/255.0 blue:70/255.0 alpha:1];
-    self.drawCircle.layer.cornerRadius = 11;
-    self.drawCircle.userInteractionEnabled = NO;
+    
+    #pragma mark - 先设置获取验证码为不可点击的状态
+//    self.getPhoneVerifyButton.backgroundColor = [UIColor lightGrayColor];
+//    self.getPhoneVerifyButton.enabled = NO;
     
     
-//    #pragma mark - 先设置获取验证码为不可点击的状态
-    self.getPhoneVerifyButton.backgroundColor = [UIColor lightGrayColor];
-    self.getPhoneVerifyButton.enabled = NO;
+    
+    //给图形验证码(就是显示验证码的图片)添加一个点击手势，点击一次就刷新验证码
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(refreshVerifyImage)];
+    self.verifyImageView.userInteractionEnabled = YES;
+    [self.verifyImageView addGestureRecognizer:tapRecognizer];
+    
+    
+    
+    
+    #pragma mark - 获取图形验证码请求
+    
+    [ss_registRequest ss_registGetImageHTTPRequest:^(NSData *data) {
+        self.verifyImageView.image = [UIImage imageWithData:data];
+    }];
+    
     
 }
 
 - (void)touchScrollView {
     [self.view endEditing:YES];
 }
+
+- (void)refreshVerifyImage {
+    [ss_registRequest ss_registGetImageHTTPRequest:^(NSData *data) {
+        self.verifyImageView.image = [UIImage imageWithData:data];
+    }];
+
+}
+
+
 
 
 
@@ -184,23 +208,33 @@
             }
         }];
     }
-    //判断邮箱是否可用
-    if (self.myEmailTF.text.length != 0) {
-        ss_registModel *model = [[ss_registModel alloc] init];
-        model.email = self.myEmailTF.text;
-        [ss_registRequest ss_registVerifyEmailHTTPRequestModel:model request:^(NSMutableArray *object) {
+//    //判断邮箱是否可用
+//    if (self.myEmailTF.text.length != 0) {
+//        ss_registModel *model = [[ss_registModel alloc] init];
+//        model.email = self.myEmailTF.text;
+//        [ss_registRequest ss_registVerifyEmailHTTPRequestModel:model request:^(NSMutableArray *object) {
+//            
+//        }];
+//    }
+//    
+//    
+//    if (self.myPhoneTF.text.length != 0 && self.myUsernameTF.text.length != 0 && self.myPasswordTF.text.length != 0 && self.myRepeatPasswordTF.text.length != 0 && self.myEmailTF.text.length != 0) {
+//        #pragma mark - 设置获取验证码为可点击的状态
+//        self.getPhoneVerifyButton.backgroundColor = [UIColor colorWithRed:28/255.0 green:164/255.0 blue:70/255.0 alpha:1];
+//        self.getPhoneVerifyButton.enabled = YES;
+//    }
+    
+    //验证图形验证码是否输入正确
+    if (self.verifyNumber.text.length != 0) {
+//            [ss_registRequest ss_registVerifyImageHTTPRequest:nil request:^{
+//        
+//            }];
+        debugLog(@"%@", self.verifyNumber.text);
+        [ss_registRequest ss_registVerifyImageHTTPRequest:self.verifyNumber.text request:^{
             
         }];
+
     }
-    
-    
-    if (self.myPhoneTF.text.length != 0 && self.myUsernameTF.text.length != 0 && self.myPasswordTF.text.length != 0 && self.myRepeatPasswordTF.text.length != 0 && self.myEmailTF.text.length != 0) {
-        #pragma mark - 设置获取验证码为可点击的状态
-        self.getPhoneVerifyButton.backgroundColor = [UIColor colorWithRed:28/255.0 green:164/255.0 blue:70/255.0 alpha:1];
-        self.getPhoneVerifyButton.enabled = YES;
-    }
-    
-    
     
     
     
@@ -228,6 +262,10 @@
     
     self.getPhoneVerifyButton.backgroundColor = [UIColor lightGrayColor];
     self.getPhoneVerifyButton.enabled = NO;
+    
+    [ss_registRequest ss_registGetPhoneVerifyNumberHTTPRequest:self.myPhoneTF.text request:^{
+        
+    }];
     
     
     
@@ -276,9 +314,13 @@
     
     _isDrawCircle = !_isDrawCircle;
     if (_isDrawCircle) {
-        [self.myDidReadButton addSubview:self.drawCircle];
+        
+        self.bigGrayLayer.strokeColor = [UIColor colorWithRed:28/255.0 green:164/255.0 blue:70/255.0 alpha:1].CGColor;
+        [self.heheheheView.layer addSublayer:self.smallGreenLayer];
+        
     } else {
-        [self.drawCircle removeFromSuperview];
+        self.bigGrayLayer.strokeColor = [UIColor lightGrayColor].CGColor;
+        [self.smallGreenLayer removeFromSuperlayer];
     }
     
 }
@@ -302,7 +344,7 @@
     model.username = self.myUsernameTF.text;
     model.password = self.myRepeatPasswordTF.text;
     model.phone = self.myPhoneTF.text ;
-    model.email = self.myEmailTF.text;
+//    model.email = self.myEmailTF.text;
     model.valicationCode = self.phoneVerifyNumberTF.text;
     [ss_registRequest ss_registHTTPRequestModel:model request:^(NSMutableArray *object) {
         
@@ -347,6 +389,42 @@
     [animation setRepeatCount:3];
     // 添加上动画
     [viewLayer addAnimation:animation forKey:nil];
+}
+
+
+- (void)setupHaveReadProtocolState {
+    self.heheheheView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    self.heheheheView.center = self.myDidReadButton.center;
+    self.heheheheView.backgroundColor = [UIColor whiteColor];
+    self.heheheheView.userInteractionEnabled = NO;
+    
+    self.bigGrayLayer = [CAShapeLayer layer];
+    self.bigGrayLayer.frame = self.heheheheView.frame;
+    self.bigGrayLayer.position = self.heheheheView.center;
+    self.bigGrayLayer.fillColor = [UIColor clearColor].CGColor;
+    self.bigGrayLayer.lineWidth = 1.0;
+    self.bigGrayLayer.anchorPoint = CGPointMake(1, 1);
+    self.bigGrayLayer.strokeColor=  [UIColor lightGrayColor].CGColor;
+    UIBezierPath *pathBig = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, 24, 24)];
+    self.bigGrayLayer.path = pathBig.CGPath;
+    
+    [self.heheheheView.layer addSublayer:self.bigGrayLayer];
+    
+    [self.myDidReadButton addSubview:self.heheheheView];
+    
+    
+    self.smallGreenLayer = [CAShapeLayer layer];
+    self.smallGreenLayer.frame = self.heheheheView.frame;
+    self.smallGreenLayer.position = self.heheheheView.center;
+    self.smallGreenLayer.fillColor = [UIColor colorWithRed:28/255.0 green:164/255.0 blue:70/255.0 alpha:1].CGColor;
+    self.smallGreenLayer.lineWidth = 1.0;
+    self.smallGreenLayer.anchorPoint = CGPointMake(1, 1);
+    self.smallGreenLayer.strokeColor=  [UIColor colorWithRed:28/255.0 green:164/255.0 blue:70/255.0 alpha:1].CGColor;
+    UIBezierPath *pathSmall = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(4, 4, 16, 16)];
+    self.smallGreenLayer.path = pathSmall.CGPath;
+
+    
+
 }
 
 

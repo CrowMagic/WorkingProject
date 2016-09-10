@@ -29,27 +29,40 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ytf-jp-SBu">
-                                <rect key="frame" x="5" y="224" width="230" height="60"/>
+                                <rect key="frame" x="5" y="224" width="225" height="60"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" fixedFrame="YES" text="名玉鉴赏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IqD-ny-wwg">
-                                        <rect key="frame" x="0.0" y="0.0" width="242" height="30"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="名玉鉴赏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IqD-ny-wwg">
+                                        <rect key="frame" x="0.0" y="0.0" width="225" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="kQO-8n-sgE"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" fixedFrame="YES" text="名与鉴赏，名玉鉴赏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kc0-37-Bbl">
-                                        <rect key="frame" x="0.0" y="30" width="242" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="名与鉴赏，名玉鉴赏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kc0-37-Bbl">
+                                        <rect key="frame" x="0.0" y="30" width="225" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="mqK-iv-anI"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.10980392160000001" green="0.64313725489999995" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="Kc0-37-Bbl" firstAttribute="leading" secondItem="Ytf-jp-SBu" secondAttribute="leading" id="390-qB-WEJ"/>
                                     <constraint firstAttribute="height" constant="60" id="3zS-bM-7DY"/>
+                                    <constraint firstAttribute="trailing" secondItem="IqD-ny-wwg" secondAttribute="trailing" id="QCB-5F-5T1"/>
+                                    <constraint firstAttribute="trailing" secondItem="Kc0-37-Bbl" secondAttribute="trailing" id="cY5-aD-e4H"/>
+                                    <constraint firstItem="IqD-ny-wwg" firstAttribute="top" secondItem="Ytf-jp-SBu" secondAttribute="top" id="lWi-SB-Qc5"/>
+                                    <constraint firstItem="IqD-ny-wwg" firstAttribute="leading" secondItem="Ytf-jp-SBu" secondAttribute="leading" id="m5Z-Zq-iYw"/>
+                                    <constraint firstAttribute="bottom" secondItem="Kc0-37-Bbl" secondAttribute="bottom" id="swx-gw-wk1"/>
                                 </constraints>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="wgG-QT-RTp" secondAttribute="trailing" constant="5" id="0ts-S6-aBK"/>
                             <constraint firstAttribute="bottom" secondItem="wgG-QT-RTp" secondAttribute="bottom" constant="5" id="2eZ-N3-PpR"/>
@@ -59,7 +72,7 @@
                             <constraint firstAttribute="bottom" secondItem="Ytf-jp-SBu" secondAttribute="bottom" constant="5" id="Ng5-tS-z8e"/>
                             <constraint firstItem="d6b-3T-3C5" firstAttribute="top" secondItem="83Y-bQ-V8s" secondAttribute="top" constant="5" id="U4d-Qn-IE9"/>
                             <constraint firstAttribute="trailing" secondItem="d6b-3T-3C5" secondAttribute="trailing" constant="5" id="hQf-2N-5lo"/>
-                            <constraint firstItem="wgG-QT-RTp" firstAttribute="leading" secondItem="Ytf-jp-SBu" secondAttribute="trailing" id="xIw-lE-9mF"/>
+                            <constraint firstItem="wgG-QT-RTp" firstAttribute="leading" secondItem="Ytf-jp-SBu" secondAttribute="trailing" constant="5" id="xIw-lE-9mF"/>
                         </constraints>
                     </view>
                 </subviews>

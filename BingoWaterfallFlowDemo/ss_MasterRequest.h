@@ -11,13 +11,28 @@
 @interface ss_MasterRequest : NSObject
 
 /**
- *  大师首页网络请求
+ *  大师网络请求
  *
- *  @param model    <#model description#>
- *  @param complete <#complete description#>
+ *  @param choseType 分为推荐,名气,新进
+ *  @param chosePage 选择加载的页数
+ *  @param complete  完成返回的数据
  */
-+ (void)ss_MasterHTTPRequestModel:(ss_MasterModel *)model request:(void(^)(NSDictionary *dic))complete;
++ (void)ss_masterHTTPRequest:(NSString *)choseType page:(NSString *)chosePage request:(void(^)(NSMutableArray *object))complete;
 
+/**
+ *  大师点赞网络请求
+ *
+ *  @param idString 大师id编号
+ *  @param complete
+ */
++ (void)ss_masterUpHTTPRequest:(NSString *)idString request:(void(^)())complete;
 
+/**
+ *  大师取消点赞网络请求
+ *
+ *  @param idString 大师id编号
+ *  @param complete
+ */
++ (void)ss_masterDownHTTPRequest:(NSString *)idString request:(void(^)())complete;
 
 @end

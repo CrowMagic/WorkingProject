@@ -41,7 +41,11 @@
 //float SMALL_ROTATE_DURATION = 0.2;//控制微动画的时间
 //float TIMER_INVAL = 0.05;//控制定时器调用指定方法的时间
 
-@interface FirstViewController ()
+
+#import "ss_firstRequest.h"
+
+
+@interface FirstViewController ()<NSURLConnectionDataDelegate>
 {
     CGFloat _lastPointAngle;//上一个点相对于x轴角度
     CGPoint _centerPoint;
@@ -52,15 +56,50 @@
     BOOL updateEnable;
     float angleBig;
     NSTimer *timer;
+    NSMutableData * _mutableData;
+
 }
 @property (nonatomic, strong) UIImageView *bgImageView;
 @property (nonatomic, strong) UIImageView *centerImageView;
 @end
 
 @implementation FirstViewController
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    _mutableData = [[NSMutableData alloc]init];
+}
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [_mutableData appendData:data];
+}
+-(void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSString * str = [[NSString alloc]initWithData:_mutableData encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",str);
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+//    [ss_firstRequest ss_firstRequestModel:@"" request:^(NSDictionary *dic) {
+//
+//    }];
+//    NSString *urlString = @"http://192.168.2.22:8090/wap/product/list";
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+//    [urlRequest setAllHTTPHeaderFields:@{@"appid":@"RbpQ8flsM61Wh6QDB1HCIy2rYMfba626", @"appsecret":@"capitalofsouthjadeinchina", @"sessionid":@"xxxxxxxxxxx"}];
+//    NSString *paraStr = [NSString stringWithFormat:@"orderType=%@&start=%@&count=%@",@"news", @1, @10];
+//    NSData *data = [paraStr dataUsingEncoding:NSUTF8StringEncoding];
+//    [urlRequest setHTTPBody:data];
+//    [urlRequest setHTTPMethod:@"post"];
+//    NSURLConnection * urlConnection = [[NSURLConnection alloc]initWithRequest:urlRequest delegate:self startImmediately:YES];
+//    [urlConnection start];
+
+    
+    
+    
     
 #pragma mark - 点击进入消息页面
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"消息@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(goToMessage)];
@@ -473,6 +512,12 @@
         self.bgImageView.transform = CGAffineTransformMakeRotation(angleBig *M_PI/180 + M_PI * 2);
         
     }];
+    
+    
+//    [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:0.5 initialSpringVelocity:0.3 options:UIViewAnimationOptionTransitionNone animations:^{
+//        self.bgImageView.transform = CGAffineTransformMakeRotation(angleBig *M_PI/180 + M_PI * 2);
+
+//    } completion:nil];
     
     
     //    _recordAngle = 0;

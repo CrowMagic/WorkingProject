@@ -11,10 +11,19 @@
 #import "SouthJadeCollectionViewCell.h"
 #define  WIDTH (([UIScreen mainScreen].bounds.size.width -30)/2)
 
+#import "SouthJadeModel.h"
+#import "SouthJadeRequest.h"
+#import "UIImageView+WebCache.h"
+
 
 #import "BuyShowViewController.h"
 
-@interface SouthJadeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateWaterfallLayout,UITableViewDelegate,UITableViewDataSource>@property (nonatomic, strong) UICollectionView *myCollectionView;
+@interface SouthJadeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateWaterfallLayout,UITableViewDelegate,UITableViewDataSource>
+@property (nonatomic, strong) UICollectionView *myCollectionView;
+@property (nonatomic, strong) NSMutableArray *dataSource;
+
+@property (nonatomic, strong) NSMutableArray *imageHeightArray;
+@property (nonatomic, strong) NSMutableArray *imageWidthArray;
 
 @property (nonatomic, strong) UIView *maskViewShadow;//
 @property (nonatomic, strong) UITableView *rightTableView;//右边栏的选择表
@@ -32,7 +41,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.myCollectionView];
-    
+
     [self.view addSubview:[self rightControlButton]];
     [self.view addSubview:[self topSelectSegmentControl]];
     [self configRightTableViewWidth];
@@ -47,7 +56,24 @@
      *  设置此代理是为了让从屏幕左边缘返回的手势不失效
      */
     self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
+    
+    #pragma mark - 南玉网络请求
+  
+    [SouthJadeRequest ss_southJadeHTTPRequest:nil request:^(NSMutableArray *object) {
+        self.dataSource = object;
+        debugLog(@"数据源self.dataSource.count = %lu",(unsigned long)self.dataSource.count);
+        [self.myCollectionView reloadData];
+
+    }];
 }
+
+- (UIImage *)preDownLoadImage:(NSString *)str {
+    UIImageView *imageView = [[UIImageView alloc] init];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:str]];
+    return imageView.image;
+}
+
+
 
 - (void)popCurrentViewController {
     [self.navigationController popViewControllerAnimated:YES];
@@ -62,12 +88,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
 }
-
-
-
-
-
-
 
 
 - (void)configRightTableViewWidth {
@@ -174,6 +194,8 @@
 
 - (void)segmentControlChange:(UISegmentedControl *)sender {
     [sender setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:0/255.0 green:164/255.0 blue:82/255.0 alpha:1]} forState:UIControlStateSelected];
+    
+    [self.myCollectionView reloadData];
     debugLog(@"我是第%ld个",(long)sender.selectedSegmentIndex);
 }
 
@@ -254,17 +276,18 @@
 #pragma mark - UICollectionViewDelegateAndDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 9;
+    return self.dataSource.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     SouthJadeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SouthJadeCollectionViewCell" forIndexPath:indexPath];
-    cell.jadeImageView.backgroundColor = [UIColor cyanColor];
-    cell.jadeImageView.image = [UIImage imageNamed:@"sp1.png"];
-    if (indexPath.row == 2) {
-        cell.jadeImageView.image = [UIImage imageNamed:@"fm.jpg"];
-    }
-    cell.contentView.backgroundColor = [UIColor yellowColor];
+    
+    SouthJadeModel *model = self.dataSource[indexPath.row];
+    
+    cell.jadeNameLabel.text = model.name;
+    cell.jadePriceLabel.text = [NSString stringWithFormat:@"¥%.2f", model.price];
+
+    [cell.jadeImageView sd_setImageWithURL:[NSURL URLWithString:model.image]];
     return cell;
     
 }
@@ -281,52 +304,12 @@
 #pragma mark - UICollectionViewDelegateWaterfallLayout
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewWaterfallLayout *)collectionViewLayout heightForItemAtIndexPath:(NSIndexPath *)indexPath {
+   
+    debugLog(@"hahaha");
+   
+    SouthJadeModel *model = self.dataSource[indexPath.row];
     
-   //205/310 = width /h
-    //150 /200 = WIDTH / h
-    if (indexPath.row == 2) {
-        return WIDTH * 200 / 150 + 100;
-    } else {
-        return WIDTH * 310 / 205 + 100 ;
-    }
-/*
-    switch (indexPath.row) {
-        case 0:
-            return 100+100;
-            break;
-        case 1:
-            return 80+100;
-            break;
-        case 2:
-            return 60+100;
-            break;
-        case 3:
-            return 40+100;
-            break;
-        case 4:
-            return 120+100;
-            break;
-        case 5:
-            return 140+100;
-            break;
-        case 6:
-            return 160+100;
-            break;
-        case 7:
-            return 180+100;
-            break;
-        case 8:
-            return 200+100;
-            break;
-            
-        default:
-            break;
-    }
-
-    return 0;
-//    return arc4random()%100+50;
- 
- */
+    return WIDTH * model.height / model.width + 100;
 }
 
 #pragma mark - lazyLoadUICollectionView
@@ -339,7 +322,7 @@
         layout.itemWidth = WIDTH;
         layout.columnCount = 2;
         layout.delegate = self;
-        _myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 40, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) collectionViewLayout:layout];
+        _myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 40, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-40) collectionViewLayout:layout];
         _myCollectionView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:240/255.0 alpha:1];
         
         [_myCollectionView registerNib:[UINib nibWithNibName:@"SouthJadeCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"SouthJadeCollectionViewCell"];

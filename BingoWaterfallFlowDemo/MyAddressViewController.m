@@ -33,16 +33,6 @@
 
     
     
-    [AddressDBTool ss_initDB];
-    self.dataArray = (NSMutableArray *)[AddressDBTool ss_selectAllAddress];
-    //数据源赋值以后，把默认地址放在第一个显示
-    for (int i = 0; i < self.dataArray.count; i++) {
-        AddressModel *model = self.dataArray[i];
-        if ([model.currentAddress isEqualToString:@"yes"]) {
-            [self.dataArray exchangeObjectAtIndex:i withObjectAtIndex:0];
-        }
-    }
-    
 
 //    self.modifyNewAddressVC = [[BuildNewAddressViewController alloc] init];
 //    self.modifyNewAddressVC.passInsertDBIndex = self.dataArray.count;
@@ -54,6 +44,25 @@
     
     
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    
+    [AddressDBTool ss_initDB];
+    self.dataArray = (NSMutableArray *)[AddressDBTool ss_selectAllAddress];
+    //数据源赋值以后，把默认地址放在第一个显示
+    for (int i = 0; i < self.dataArray.count; i++) {
+        AddressModel *model = self.dataArray[i];
+        if ([model.currentAddress isEqualToString:@"yes"]) {
+            [self.dataArray exchangeObjectAtIndex:i withObjectAtIndex:0];
+        }
+    }
+
+}
+
+
+
 /**
  *  新建收货地址
  *
@@ -169,20 +178,21 @@
     //由于数据库中的ID是从1开始的，所以创建一个临时的数组并占据第一个元素，这样就可以按照索引使用self.dataArray了
     NSMutableArray *currentArray = [NSMutableArray arrayWithObject:@"空的占位元素"];
     //由于self.dataArray 是在viewDidLoad中赋值的，相当于从database中copy一份数据，新建地址后，虽然都更新了数据（self.dataArray, database),如果用self.dataArray,那么此时的数据块始终属于self.dataArray中的数据，并没有修改database中的数据，所以要重新查询表（），然后下面同步更新self.dataArray
+    //后来为了保证新建的识货地址能够新建以后马上删除，要一一对应表中的recordIDNumber(一开始的写法是新建地址返回，虽然刷新表了，且也写入数据库了，但此时要删除新建的recordIDNumber 为0，这个值只有再次查询表时才会和数据库表中的addressID同步)， 把sel.dataArray的赋值操作放在了方法viewWillAppear中，相当于每次刷新表或进入这个页面都是从数据库中取值，使
     [currentArray addObjectsFromArray:[AddressDBTool ss_selectAllAddress]];
     
     for (int i = 1; i < currentArray.count; i++) {
         //更新数据库中所有的currentAddress = no
         AddressModel *modelSqlite = currentArray[i];
         modelSqlite.currentAddress = @"no";
-        [AddressDBTool ss_updateAddress:modelSqlite index:[modelSqlite.recordIDNumber integerValue]];
+        [AddressDBTool ss_updateAddress:modelSqlite index:modelSqlite.recordIDNumber];
     }
     //更新选中某一行设置为默认地址的 currentAddress = yes
     AddressModel *model = currentArray[sender.tag+1];
     model.currentAddress = @"yes";
     
-    debugLog(@"此处传递额行号为：%@",model.recordIDNumber);
-    [AddressDBTool ss_updateAddress:model index:[model.recordIDNumber integerValue]];
+    debugLog(@"此处传递额行号为：%ld",(long)model.recordIDNumber);
+    [AddressDBTool ss_updateAddress:model index:model.recordIDNumber ];
     
     
     
@@ -215,14 +225,12 @@
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         AddressModel *model = self.dataArray[sender.tag];
-
+        debugLog(@"要删除的行号为 = %ld", (long)sender.tag);
+        debugLog(@"要删除的model.recordNumber为 = %d", model.recordIDNumber);
         [self.dataArray removeObjectAtIndex:sender.tag];
         [self.addressTableView reloadData];
         
         [AddressDBTool ss_deleteAllAddress:model];
-        
-       
-        
         
         
         if (self.dataArray.count == 0) {

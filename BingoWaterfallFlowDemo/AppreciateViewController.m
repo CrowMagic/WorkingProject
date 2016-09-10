@@ -12,8 +12,19 @@
 #import "ZidingViewController.h"
 
 //#import <QuartzCore/QuartzCore.h>
+
+
+
+
+#import "AppreciateModel.h"
+#import "AppreciateRequest.h"
+#import "UIImageView+WebCache.h"
+#import "MJRefresh.h"
+
+
 @interface AppreciateViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView *appreciateTableView;
+@property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UIImageView *advImageView;//顶部广告位图片
 @property (nonatomic, strong) UISegmentedControl *topSegmentSelect;//顶部的名玉鉴定和工艺赏析分段控制
 @property (nonatomic, strong) UIButton *leftButton;//左边名玉鉴定按钮
@@ -33,6 +44,62 @@
      *  设置此代理是为了让从屏幕左边缘返回的手势不失效
      */
     self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
+    
+    
+    #pragma mark - 鉴赏网络请求
+    
+    [AppreciateRequest ss_appreciateHTTPRequest:@"jade" page:@"1" request:^(NSMutableArray *object) {
+        self.dataSource = object;
+        
+        debugLog(@"self.dataSource = %@", self.dataSource);
+        
+        [self.appreciateTableView reloadData];
+    }];
+    
+    //      #pragma mark - 品牌网络请求
+    
+    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [BrandRequest ss_brandHTTPRequestPara:@"news" request:^(NSMutableArray *object) {
+//            self.dataSource = object;
+//            [self.myTableView.header beginRefreshing];
+//            
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self.myTableView reloadData];
+//            });
+//            
+//        }];
+//    });
+    
+    
+    //下拉刷新
+    self.appreciateTableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        // 进入刷新状态后会自动调用这个block
+        
+        [AppreciateRequest ss_appreciateHTTPRequest:@"jade" page:@"1" request:^(NSMutableArray *object) {
+            [self.dataSource removeAllObjects];
+            self.dataSource = object;
+            
+//            debugLog(@"self.dataSource = %@", self.dataSource);
+            
+            [self.appreciateTableView reloadData];
+            [self.appreciateTableView.header endRefreshing];
+        }];
+    }];
+    
+    // 上拉刷新
+    self.appreciateTableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+      
+        
+        [AppreciateRequest ss_appreciateHTTPRequest:@"jade" page:@"1" request:^(NSMutableArray *object) {
+            [self.dataSource addObjectsFromArray:object];
+            [self.appreciateTableView reloadData];
+            [self.appreciateTableView.footer endRefreshing];
+
+        }];
+        
+    }];
+
     
 }
 
@@ -61,7 +128,7 @@
     if (section == 0) {
         return 1;
     } else {
-        return 10;
+        return self.dataSource.count;
     }
 }
 
@@ -74,12 +141,20 @@
     } else {
         AppreciateCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AppreciateCell" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (indexPath.row == 0) {
-            cell.appreciateImageView.image = [UIImage imageNamed:@"ss_fm.jpg"];
-
-        } else {
-            cell.appreciateImageView.image = [UIImage imageNamed:@"m.jpg"];
-        }
+//        if (indexPath.row == 0) {
+//            cell.appreciateImageView.image = [UIImage imageNamed:@"ss_fm.jpg"];
+//
+//        } else {
+//            cell.appreciateImageView.image = [UIImage imageNamed:@"m.jpg"];
+//        }
+//        
+        AppreciateModel *model = self.dataSource[indexPath.row];
+        [cell.appreciateImageView sd_setImageWithURL:[NSURL URLWithString:model.imageUrl]];
+        cell.firstLineLabel.text = model.title;
+        cell.secondLineLabel.text = model.propaganda;
+        [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.logoUrl]];
+        
+        
         return cell;
     }
     
@@ -110,15 +185,19 @@
     if (indexPath.section == 0) {
         return 100;
     } else {
-        if (indexPath.section == 1) {
-            if (indexPath.row == 0) {
-                return [UIScreen mainScreen].bounds.size.width * 800/ 600 + 60;
-            } else {
-                
-                //1024 * 683
-                return [UIScreen mainScreen].bounds.size.width * 683 / 1024 + 60;
-            }
-        }
+//        if (indexPath.section == 1) {
+//            if (indexPath.row == 0) {
+//                return [UIScreen mainScreen].bounds.size.width * 800/ 600 + 60;
+//            } else {
+//                
+//                //1024 * 683
+//                return [UIScreen mainScreen].bounds.size.width * 683 / 1024 + 60;
+//            }
+//        }
+        
+        AppreciateModel *model = self.dataSource[indexPath.row];
+        return ([UIScreen mainScreen].bounds.size.width - 30) * model.imageHeight / model.imageWidth + 60;
+        
     }
     return 0;
 }

@@ -56,7 +56,7 @@ static FMDatabase *_db = nil;
             model.address = [set stringForColumnIndex:4];
             model.postcode = [set stringForColumnIndex:5];
             model.currentAddress = [set stringForColumnIndex:6];
-            model.recordIDNumber = [set stringForColumnIndex:0];
+            model.recordIDNumber = [set intForColumnIndex:0];
             [addressArray addObject:model];
         }
         [set close];
@@ -67,8 +67,10 @@ static FMDatabase *_db = nil;
 
 + (void)ss_deleteAllAddress:(AddressModel *)address  {
     if ([_db open]) {
-     BOOL isOK = [_db executeUpdateWithFormat:@"delete from addressTable where name = %@;",address.name];
-    debugLog(@"delete addressTable:%@",isOK?@"success":@"error");
+        
+        //code review,find the bug and fix it in 1/9/2016
+     BOOL isOK = [_db executeUpdateWithFormat:@"delete from addressTable where addressID = %ld",(long)address.recordIDNumber];
+    debugLog(@"delete addressTable %ldth row %@",(long)address.recordIDNumber ,isOK?@"success":@"error");
     }
     [_db close];
 }

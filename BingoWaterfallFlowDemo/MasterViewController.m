@@ -14,6 +14,8 @@
 //网络请求
 #import "ss_MasterModel.h"
 #import "ss_MasterRequest.h"
+#import "UIImageView+WebCache.h"
+#import "MJRefresh.h"
 
 
 
@@ -50,17 +52,48 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"消息@2x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(goToChatMessage)];
   
 #pragma mark - 大师网络请求
-    ss_MasterModel *model = [[ss_MasterModel alloc] init];
-    model.pageNumber = 0;
-    [ss_MasterRequest ss_MasterHTTPRequestModel:model request:^(NSDictionary *dic) {
+   
+    [ss_MasterRequest ss_masterHTTPRequest:@"care" page:@"1" request:^(NSMutableArray *object) {
+        self.dataSource = object;
+        [self.collectionView reloadData];
+        debugLog(@"self.dataSource = %lu",(unsigned long)self.dataSource.count);
+        
+        
+        
+        
+        self.recordCellStateArray = [NSMutableArray array];
+        for (int i = 0; i < self.dataSource.count; i++) {
+            [self.recordCellStateArray addObject:@"0"];
+        }
+        debugLog(@"记录cell的数组个数为 %lu", (unsigned long)self.recordCellStateArray.count);
+    }];
+    
+    
+    self.collectionView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        // 进入刷新状态后会自动调用这个block
+        
+        [ss_MasterRequest ss_masterHTTPRequest:@"care" page:@"1" request:^(NSMutableArray *object) {
+            [self.dataSource addObjectsFromArray:object];
+            
+            for (int i = 0; i < object.count; i++) {
+                [self.recordCellStateArray addObject:@"0"];
+
+            }
+            
+            
+            debugLog(@"刷新后记录cell的数组个数为 %lu", (unsigned long)self.recordCellStateArray.count);
+
+            
+            [self.collectionView reloadData];
+            [self.collectionView.header endRefreshing];
+        }];
         
     }];
     
-    self.recordCellStateArray = [NSMutableArray array];
-    for (int i = 0; i < 50; i++) {
-        [self.recordCellStateArray addObject:@0];
-    }
-
+    
+    
+    
+   
 }
 
 - (void)popCurrentViewController {
@@ -98,7 +131,7 @@
 #pragma mark - UICollectionViewDelegateAndDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 50;
+    return self.dataSource.count;
 }
 
 
@@ -115,8 +148,14 @@
                              action:@selector(isThumbUpButtonClick:)
                    forControlEvents:UIControlEventTouchUpInside];
     
-    cell.artPicture.image = [UIImage imageNamed:@"artMaster.jpg"];
-    cell.artPicture.clipsToBounds = YES;
+    
+    ss_MasterModel *model = self.dataSource[indexPath.row];
+    [cell.artPicture sd_setImageWithURL:[NSURL URLWithString:model.url]];
+    cell.thumbUpCount.text = [NSString stringWithFormat:@"%d", model.likes];
+    cell.artName.text = model.name;
+    
+//    cell.artPicture.image = [UIImage imageNamed:@"artMaster.jpg"];
+//    cell.artPicture.clipsToBounds = YES;
     return cell;
 }
 
@@ -158,19 +197,35 @@
     debugLog(@"我是第%ld个item的点赞按钮",(long)sender.tag);
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
     CollectionViewCell *cell = (CollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-//    sender.selected = !sender.selected;
-   
     if (sender.selected == YES) {
         [self.recordCellStateArray setObject:@"0" atIndexedSubscript:indexPath.row];
-
-        cell.thumbUpCount.text = @"123";
+        int count = [cell.thumbUpCount.text intValue];
+        count -= 1;
+        cell.thumbUpCount.text = [NSString stringWithFormat:@"%d", count];
         cell.thumbUpCount.textColor = [UIColor blackColor];
+        cell.isThumbUp.image = [UIImage imageNamed:@"未点赞.png"];
+        
+        [ss_MasterRequest ss_masterDownHTTPRequest:nil request:^{
+            
+        }];
+        
         sender.selected = NO;
     } else  {
         [self.recordCellStateArray setObject:@"1" atIndexedSubscript:indexPath.row];
 
-        cell.thumbUpCount.text = @"124";
+        int count = [cell.thumbUpCount.text intValue];
+        count += 1;
+        
+        cell.thumbUpCount.text = [NSString stringWithFormat:@"%d", count];
+        
         cell.thumbUpCount.textColor = [UIColor colorWithRed:251/255.0 green:130/255.0 blue:130/255.0 alpha:1];
+        cell.isThumbUp.image = [UIImage imageNamed:@"已点赞.png"];
+
+        [ss_MasterRequest ss_masterUpHTTPRequest:nil request:^{
+            
+        }];
+        
+        
         sender.selected = YES;
     }
   

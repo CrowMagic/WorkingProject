@@ -5,7 +5,7 @@
 	<key> bundle display name</key>
 	<string>南玉</string>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>zh_CN</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -50,5 +50,7 @@
 		<string>App palys </string>
 		<string>App registers for location updates</string>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string>SouthJade</string>
 </dict>
 </plist>

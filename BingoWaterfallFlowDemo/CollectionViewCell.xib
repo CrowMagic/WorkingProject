@@ -76,9 +76,9 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B1o-p8-1VM">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="170"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9G6-XO-T5A">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9G6-XO-T5A">
                                 <rect key="frame" x="35" y="20" width="130" height="130"/>
-                                <color key="backgroundColor" red="1" green="0.17805363160000001" blue="0.059385363019999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="Wlb-3J-Fd7"/>
                                     <constraint firstAttribute="width" constant="130" id="xod-tK-3IT"/>
